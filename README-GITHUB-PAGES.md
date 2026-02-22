@@ -7,7 +7,7 @@ git checkout -b main
 git add .
 git commit -m "Initial investor access demo"
 ```
-
+  
 ## 2) Create a new empty GitHub repo
 Create on GitHub UI, for example: `ufund-investor-demo`
 
