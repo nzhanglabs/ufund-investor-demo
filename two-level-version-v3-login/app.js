@@ -15,8 +15,8 @@ const AUTH_KEYS = {
 };
 
 const DEFAULT_INVITES = [
-  { token: "UFUND-QUALIFIED-DEMO", email: "qualified.demo@ufundinvestment.com", initialRole: "qualified", used: false },
-  { token: "UFUND-MEMBER-DEMO", email: "member.demo@ufundinvestment.com", initialRole: "member", used: false }
+  { token: "UFUND-QUALIFIED-DEMO", email: "qualified.demo@ufundinvestment.com", initialRole: "qualified", used: false, reusable: true },
+  { token: "UFUND-MEMBER-DEMO", email: "member.demo@ufundinvestment.com", initialRole: "member", used: false, reusable: true }
 ];
 
 function readJSON(key, fallback) {

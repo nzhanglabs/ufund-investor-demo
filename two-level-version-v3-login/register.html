@@ -61,8 +61,8 @@
       };
 
       const DEFAULT_INVITES = [
-        { token: "UFUND-QUALIFIED-DEMO", email: "qualified.demo@ufundinvestment.com", initialRole: "qualified", used: false },
-        { token: "UFUND-MEMBER-DEMO", email: "member.demo@ufundinvestment.com", initialRole: "member", used: false }
+        { token: "UFUND-QUALIFIED-DEMO", email: "qualified.demo@ufundinvestment.com", initialRole: "qualified", used: false, reusable: true },
+        { token: "UFUND-MEMBER-DEMO", email: "member.demo@ufundinvestment.com", initialRole: "member", used: false, reusable: true }
       ];
 
       const readJSON = (k, f) => { try { const raw = localStorage.getItem(k); return raw ? JSON.parse(raw) : f; } catch { return f; } };
@@ -74,13 +74,16 @@
       const token = new URLSearchParams(window.location.search).get("token");
       const inviteList = readJSON(AUTH_KEYS.invites, []);
       const invite = inviteList.find((i) => i.token === token);
+      const isDemoToken = !!(invite && typeof invite.token === "string" && invite.token.endsWith("-DEMO"));
+      const isInviteReusable = !!(invite && (invite.reusable || isDemoToken));
+      const inviteConsumed = !!(invite && invite.used && !isInviteReusable);
 
       const lockedEl = document.getElementById("locked");
       const inviteInfoEl = document.getElementById("inviteInfo");
       const form = document.getElementById("registerForm");
       const errorEl = document.getElementById("error");
 
-      if (!token || !invite || invite.used) {
+      if (!token || !invite || inviteConsumed) {
         lockedEl.style.display = "block";
         lockedEl.textContent = "Invalid or expired invite link. Please contact investor@ufundinvestment.com for a new invite.";
       } else {
@@ -121,7 +124,12 @@
         });
         writeJSON(AUTH_KEYS.users, users);
 
-        const nextInvites = readJSON(AUTH_KEYS.invites, []).map((i) => i.token === invite.token ? { ...i, used: true, usedAt: new Date().toISOString() } : i);
+        const nextInvites = readJSON(AUTH_KEYS.invites, []).map((i) => {
+          if (i.token !== invite.token) return i;
+          const reusable = !!(i.reusable || (typeof i.token === "string" && i.token.endsWith("-DEMO")));
+          if (reusable) return i;
+          return { ...i, used: true, usedAt: new Date().toISOString() };
+        });
         writeJSON(AUTH_KEYS.invites, nextInvites);
 
         writeJSON(AUTH_KEYS.session, { email, role: invite.initialRole });
