@@ -205,7 +205,7 @@ body {
 .topbar h1 {
   margin: 0;
   font-family: "Montserrat", sans-serif;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
   letter-spacing: 0.2px;
   color: #112b4a;
@@ -228,7 +228,7 @@ body {
 .hero h2 {
   margin: 0 0 6px;
   font-family: "Montserrat", sans-serif;
-  font-size: 44px;
+  font-size: 34px;
   font-weight: 800;
   color: #0f2d50;
 }
@@ -236,7 +236,7 @@ body {
 .hero p {
   margin: 0;
   color: var(--muted);
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .cards {
@@ -260,7 +260,7 @@ body {
 .card h3 {
   margin: 0 0 8px;
   font-family: "Montserrat", sans-serif;
-  font-size: 23px;
+  font-size: 20px;
   line-height: 1.15;
   color: #132f50;
 }
@@ -268,7 +268,7 @@ body {
 .card p {
   margin: 0 0 12px;
   color: var(--muted);
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .card.wide {
@@ -355,7 +355,7 @@ body {
   margin-top: 0;
   margin-bottom: 12px;
   font-family: "Montserrat", sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   color: #123151;
 }
 
@@ -374,12 +374,14 @@ body {
 .item h4 {
   margin: 0 0 3px;
   font-family: "Montserrat", sans-serif;
+  font-size: 16px;
   color: #123151;
 }
 
 .item p {
   margin: 0;
   color: var(--muted);
+  font-size: 14px;
 }
 
 .inline-link {
