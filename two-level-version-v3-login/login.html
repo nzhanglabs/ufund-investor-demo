@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UFUND Login</title>
+    <style>
+      body { margin: 0; font-family: "Source Sans 3", "Segoe UI", sans-serif; background: linear-gradient(180deg, #f7f9fc, #eef2f7); color: #1a2f49; }
+      .wrap { max-width: 520px; margin: 48px auto; background: #fff; border: 1px solid #d9e3ef; border-radius: 12px; box-shadow: 0 12px 26px rgba(15, 39, 68, 0.08); padding: 20px; }
+      h1 { margin: 0 0 6px; font-size: 30px; font-family: "Montserrat", sans-serif; }
+      .sub { margin: 0 0 16px; color: #5f7390; }
+      .field { display: grid; gap: 6px; margin-bottom: 10px; }
+      label { font-size: 14px; font-weight: 700; color: #1a3555; }
+      input { border: 1px solid #d6e1ee; border-radius: 8px; padding: 10px; font: inherit; }
+      .btn { border: 0; border-radius: 8px; background: #f59a23; color: #fff; font-weight: 700; padding: 10px 14px; cursor: pointer; }
+      .btn.secondary { background: #eef3f9; color: #244266; }
+      .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+      .hint { margin-top: 12px; font-size: 13px; color: #61758f; }
+      .error { color: #b5391f; font-size: 13px; min-height: 18px; margin-top: 8px; }
+      .ok { color: #2f6b45; font-size: 13px; min-height: 18px; margin-top: 8px; }
+      code { background: #f3f6fb; padding: 1px 4px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Investor Access Login</h1>
+      <p class="sub">Use your registered email and password.</p>
+
+      <form id="loginForm">
+        <div class="field">
+          <label>Email</label>
+          <input id="email" type="email" required />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input id="password" type="password" required />
+        </div>
+        <button class="btn" type="submit">Login</button>
+      </form>
+
+      <div id="error" class="error"></div>
+      <div id="ok" class="ok"></div>
+
+      <div class="row">
+        <a class="btn secondary" href="admin.html" style="text-decoration:none;">Admin Console</a>
+      </div>
+
+      <p class="hint">Registration is invite-only. Investors must use a UFUND invite link to create an account.</p>
+      <p class="hint">Demo invite links (for testing): <code>register.html?token=UFUND-QUALIFIED-DEMO</code> and <code>register.html?token=UFUND-MEMBER-DEMO</code>.</p>
+    </div>
+
+    <script>
+      const AUTH_KEYS = {
+        users: "ufund_auth_users",
+        invites: "ufund_auth_invites",
+        session: "ufund_auth_session"
+      };
+
+      const DEFAULT_INVITES = [
+        { token: "UFUND-QUALIFIED-DEMO", email: "qualified.demo@ufundinvestment.com", initialRole: "qualified", used: false },
+        { token: "UFUND-MEMBER-DEMO", email: "member.demo@ufundinvestment.com", initialRole: "member", used: false }
+      ];
+
+      const readJSON = (k, f) => { try { const raw = localStorage.getItem(k); return raw ? JSON.parse(raw) : f; } catch { return f; } };
+      const writeJSON = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+      const seedInvites = () => { const invites = readJSON(AUTH_KEYS.invites, []); if (!invites.length) writeJSON(AUTH_KEYS.invites, DEFAULT_INVITES); };
+
+      seedInvites();
+
+      const errorEl = document.getElementById("error");
+      const okEl = document.getElementById("ok");
+
+      document.getElementById("loginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        errorEl.textContent = "";
+        okEl.textContent = "";
+
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const password = document.getElementById("password").value;
+        const users = readJSON(AUTH_KEYS.users, []);
+        const user = users.find((u) => (u.email || "").toLowerCase() === email);
+
+        if (!user || user.password !== password) {
+          errorEl.textContent = "Invalid email or password.";
+          return;
+        }
+
+        writeJSON(AUTH_KEYS.session, { email: user.email, role: user.role });
+        const params = new URLSearchParams(window.location.search);
+        const next = params.get("next");
+        if (next && next.startsWith("/")) {
+          window.location.href = next;
+          return;
+        }
+        window.location.href = user.role === "member" ? "member-vault.html?role=member" : "start-here.html?role=qualified";
+      });
+
+    </script>
+  </body>
+</html>
