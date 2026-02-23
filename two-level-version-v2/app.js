@@ -289,7 +289,7 @@ const pages = {
       { h: "Club Membership FAQ", p: "Need full membership FAQ details? Open the dedicated FAQ page for eligibility, deposit usage, active status, and support guidance." }
     ],
     links: [
-      { label: "Become Member", route: "gfd-signup" },
+      { label: "Become a Member", route: "gfd-signup" },
       { label: "Club Membership FAQ", route: "club-membership-faq" }
     ]
   },
@@ -304,7 +304,7 @@ const pages = {
     ]
   },
   "gfd-signup": {
-    title: "Become Member",
+    title: "Become a Member",
     subtitle: "Club membership onboarding: agreement and GFD payment steps.",
     minLevel: 2,
     sections: [
@@ -946,7 +946,7 @@ function renderContent(route, role) {
           <div class="item"><h4>How to Upgrade</h4><p>Use the primary action below to start the Club Member enrollment process.</p></div>
         </div>
         <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-          <a class="btn" href="${routeToFile("gfd-signup", role)}">Become Member</a>
+          <a class="btn" href="${routeToFile("gfd-signup", role)}">Become a Member</a>
           <a class="btn secondary" href="${routeToFile("club-membership-faq", role)}">Club Membership FAQ</a>
         </div>
         <div class="disclosure">Informational only. Not investment advice. Official offering/subscription documents govern where applicable.</div>
@@ -975,7 +975,10 @@ function renderContent(route, role) {
   if (route === "member-vault" && role === "qualified") {
     ui.content.innerHTML = `
       <div class="lock-panel">
-        <h3>Only Club Members Can Access</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;">
+          <h3 style="margin:0;">Only Club Members Can Access</h3>
+          <a class="btn" href="${routeToFile("gfd-signup", role)}">Become a Member</a>
+        </div>
         <p>You are currently in Qualified Access(Limited). The modules below are preview-only and become available after Club Member activation.</p>
       </div>
       <h3 style="margin-top:14px;">Club Member Library Preview</h3>
@@ -987,7 +990,7 @@ function renderContent(route, role) {
         <article class="qa-card"><h4>Investor Education (General Information)</h4><p>General educational guidance on review approach, diligence, risk, and market cycles.</p><div class="qa-actions"><a class="btn locked" href="javascript:void(0)">Enter (Locked)</a></div></article>
       </div>
       <div style="margin-top:12px;">
-        <a class="btn" href="${routeToFile("gfd-signup", role)}">Become Member</a>
+        <a class="btn" href="${routeToFile("gfd-signup", role)}">Become a Member</a>
       </div>
       <div class="disclosure">Preview only. Member-only content is restricted until Club Member activation.</div>
     `;
@@ -1055,7 +1058,7 @@ function renderContent(route, role) {
           <p>How the club works, refundable GFD rules, and sign-up path.</p>
           <div class="qa-actions">
             <a class="btn" href="${routeToFile("gfd", role)}">View</a>
-            <a class="btn" href="${routeToFile("gfd-signup", role)}">Become Memeber</a>
+            <a class="btn" href="${routeToFile("gfd-signup", role)}">Become a Member</a>
           </div>
         </article>
         <article class="qa-card">
