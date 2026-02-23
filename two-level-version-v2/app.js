@@ -84,11 +84,12 @@ const pipelineWatchlistData = [
 const activeDealsIndexData = [
   {
     name: "Harbor Logistics I",
+    dealKey: "harbor",
     location: "Savannah Metro, GA",
     assetType: "Industrial",
     stage: "Open for review",
     route: "deal-harbor",
-    pledgeHref: "mock/harbor/pledge.html",
+    pledgeHref: "deal-pledge-form",
     brochureHref: "mock/harbor/brochure.html",
     webinarHref: "mock/harbor/webinar.html",
     theme: "Logistics-oriented strategy in a major port-linked distribution corridor.",
@@ -97,11 +98,12 @@ const activeDealsIndexData = [
   },
   {
     name: "Sunbelt Multifamily Select",
+    dealKey: "sunbelt",
     location: "Dallas-Fort Worth, TX",
     assetType: "Multifamily",
     stage: "Priority review",
     route: "deal-sunbelt",
-    pledgeHref: "mock/sunbelt/subscription-link.html",
+    pledgeHref: "deal-pledge-form",
     brochureHref: "mock/sunbelt/brochure.html",
     webinarHref: "mock/sunbelt/webinar.html",
     theme: "Multifamily opportunity in a high-growth metro with operating upside focus.",
@@ -110,11 +112,12 @@ const activeDealsIndexData = [
   },
   {
     name: "Edge Data Infra",
+    dealKey: "edge",
     location: "Phoenix Metro, AZ",
     assetType: "Industrial",
     stage: "Member due diligence",
     route: "deal-edge",
-    pledgeHref: "mock/edge/pledge.html",
+    pledgeHref: "deal-pledge-form",
     brochureHref: "mock/edge/brochure.html",
     webinarHref: "mock/edge/webinar.html",
     theme: "Infrastructure-adjacent opportunity tied to long-term digital demand themes.",
@@ -445,7 +448,7 @@ const pages = {
       },
       {
         h: "Pledge Link",
-        p: `<a class="btn" target="_blank" rel="noopener" href="mock/harbor/pledge.html">I want to Pledge</a>`
+        p: `<a class="btn" href="deal-pledge-form.html?role={{role}}&deal=harbor">I want to Pledge</a>`
       },
       
     ]
@@ -465,7 +468,7 @@ const pages = {
       },
       {
         h: "Pledge Link",
-        p: `<a class="btn" target="_blank" rel="noopener" href="mock/sunbelt/subscription-link.html">I want to Pledge</a>`
+        p: `<a class="btn" href="deal-pledge-form.html?role={{role}}&deal=sunbelt">I want to Pledge</a>`
       },
       
     ]
@@ -485,10 +488,22 @@ const pages = {
       },
       {
         h: "Pledge Link",
-        p: `<a class="btn" target="_blank" rel="noopener" href="mock/edge/pledge.html">I want to Pledge</a>`
+        p: `<a class="btn" href="deal-pledge-form.html?role={{role}}&deal=edge">I want to Pledge</a>`
       },
      
     ]
+  },
+  "deal-pledge-form": {
+    title: "Pledge Form",
+    subtitle: "Submit your indication of interest.",
+    minLevel: 3,
+    sections: []
+  },
+  "deal-pledge-confirmation": {
+    title: "Pledge Confirmation",
+    subtitle: "Confirmation after submitting pledge form.",
+    minLevel: 3,
+    sections: []
   },
   pipeline: {
     title: "Pipeline Watchlist",
@@ -676,6 +691,11 @@ function getRoleFromQuery() {
   const role = params.get("role");
   if (role && roles[role]) return role;
   return null;
+}
+
+function getQueryParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name);
 }
 
 function getRole() {
@@ -885,7 +905,7 @@ function renderActiveDealsIndex(role) {
                 <li><strong>Updated:</strong> ${deal.updated}</li>
               </ul>
               <div class="deal-actions">
-                <a class="btn" href="${deal.pledgeHref}">I want to Pledge</a>
+                <a class="btn" href="${routeToFile(deal.pledgeHref, role)}&deal=${deal.dealKey}">I want to Pledge</a>
                 <a class="btn" href="${routeToFile(deal.route, role)}">View Full Package</a>
               </div>
               <p class="deal-cta-note">Access is for information review only. Final terms are governed by applicable offering documents.</p>
@@ -1297,6 +1317,109 @@ function renderContent(route, role) {
         <div class="item"><h4>2023 Year-End Report</h4><p>Annual summary of portfolio progress and key milestones.</p><div style="margin-top:8px;"><a class="btn" href="mock/member-report/year-end-2023.html">Open Report</a></div></div>
       </div>
       <div class="disclosure">Demo list: year-end report links for Club Members.</div>
+    `;
+    return;
+  }
+
+  if (route === "deal-pledge-form") {
+    const dealKey = getQueryParam("deal") || "harbor";
+    const dealMap = {
+      harbor: { name: "Harbor Logistics I", route: "deal-harbor" },
+      sunbelt: { name: "Sunbelt Multifamily Select", route: "deal-sunbelt" },
+      edge: { name: "Edge Data Infra", route: "deal-edge" }
+    };
+    const deal = dealMap[dealKey] || dealMap.harbor;
+
+    ui.content.innerHTML = `
+      <h3>${deal.name} - Pledge Form</h3>
+      <p style="margin:0 0 12px; color:#5f7390;">Submit your indication of interest below. This is for demo workflow only.</p>
+      <form id="dealPledgeForm" class="pledge-form">
+        <div class="pledge-grid">
+          <div class="pledge-field">
+            <label>Subscriber First Name</label>
+            <input required name="first_name" type="text" />
+          </div>
+          <div class="pledge-field">
+            <label>Last Name</label>
+            <input required name="last_name" type="text" />
+          </div>
+          <div class="pledge-field">
+            <label>Email Address</label>
+            <input required name="email" type="email" />
+          </div>
+          <div class="pledge-field">
+            <label>Phone #</label>
+            <input required name="phone" type="tel" />
+          </div>
+          <div class="pledge-field">
+            <label>Project Name</label>
+            <input required name="project_name" type="text" value="${deal.name}" />
+          </div>
+          <div class="pledge-field">
+            <label>Pledge Amount</label>
+            <input required name="pledge_amount" type="text" placeholder="e.g. USD 100,000" />
+          </div>
+          <div class="pledge-field pledge-full">
+            <label>Street Address (Line 1)</label>
+            <input required name="street_1" type="text" />
+          </div>
+          <div class="pledge-field pledge-full">
+            <label>Street Address (Line 2)</label>
+            <input name="street_2" type="text" />
+          </div>
+          <div class="pledge-field">
+            <label>City</label>
+            <input required name="city" type="text" />
+          </div>
+          <div class="pledge-field">
+            <label>State</label>
+            <input required name="state" type="text" />
+          </div>
+          <div class="pledge-field">
+            <label>Zip Code</label>
+            <input required name="zip_code" type="text" />
+          </div>
+          <div class="pledge-field">
+            <label>Country</label>
+            <input required name="country" type="text" />
+          </div>
+          <div class="pledge-field pledge-full">
+            <label>Note (field for additional information)</label>
+            <textarea name="note"></textarea>
+          </div>
+        </div>
+        <div class="pledge-submit">
+          <button type="submit" class="btn pledge-submit-btn">Submit</button>
+        </div>
+      </form>
+    `;
+    const form = document.getElementById("dealPledgeForm");
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        window.location.href = `${routeToFile("deal-pledge-confirmation", role)}&deal=${encodeURIComponent(dealKey)}`;
+      });
+    }
+    return;
+  }
+
+  if (route === "deal-pledge-confirmation") {
+    const dealKey = getQueryParam("deal") || "harbor";
+    const backMap = {
+      harbor: "deal-harbor",
+      sunbelt: "deal-sunbelt",
+      edge: "deal-edge"
+    };
+    const backRoute = backMap[dealKey] || "deal-harbor";
+    ui.content.innerHTML = `
+      <h3>Pledge Confirmation</h3>
+      <div class="list">
+        <div class="item"><p>Thank you for submitting your pledge.</p></div>
+        <div class="item"><p>Your indication of interest has been received and recorded.</p></div>
+        <div class="item"><p>Please note that submission of a pledge does not guarantee allocation in this offering. Allocations are determined on a first-come, first-served basis, subject to availability and final approval.</p></div>
+        <div class="item"><p>If the offering becomes fully subscribed, your pledge may be placed on a waitlist. We will notify you of your allocation status once confirmed. Final participation is subject to review and execution of the applicable offering documents.</p></div>
+      </div>
+      <div style="margin-top:12px;"><a class="btn" href="${routeToFile(backRoute, role)}">Back to Deal page</a></div>
     `;
     return;
   }

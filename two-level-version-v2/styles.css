@@ -321,7 +321,7 @@ body {
 }
 
 .portal-crumb {
-  padding: 14px 16px;
+  padding: 12px 14px;
   border: 1px solid #dbe6f3;
   border-left: 4px solid #f59a23;
   border-radius: 10px;
@@ -330,7 +330,7 @@ body {
 
 .portal-crumb-title {
   font-family: "Montserrat", sans-serif;
-  font-size: 24px;
+  font-size: 21px;
   font-weight: 800;
   color: #123151;
   margin-bottom: 6px;
@@ -338,7 +338,7 @@ body {
 
 .portal-crumb-subtitle {
   color: #5b7090;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.45;
 }
 
@@ -423,23 +423,23 @@ body {
   }
 
   .topbar h1 {
-    font-size: 30px;
+    font-size: 24px;
   }
 
   .hero h2 {
-    font-size: 33px;
-  }
-
-  .hero p {
-    font-size: 16px;
-  }
-
-  .card h3 {
     font-size: 28px;
   }
 
+  .hero p {
+    font-size: 15px;
+  }
+
+  .card h3 {
+    font-size: 22px;
+  }
+
   .card p {
-    font-size: 17px;
+    font-size: 15px;
   }
 }
 
@@ -710,6 +710,59 @@ body {
   text-align: right;
 }
 
+.pledge-form {
+  max-width: 900px;
+}
+
+.pledge-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.pledge-field {
+  display: grid;
+  gap: 6px;
+  border: 1px solid #e3ebf5;
+  border-radius: 9px;
+  background: var(--bg-soft);
+  padding: 10px;
+}
+
+.pledge-field label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  color: #123151;
+}
+
+.pledge-field input,
+.pledge-field textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d8e2ef;
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+}
+
+.pledge-field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.pledge-full {
+  grid-column: 1 / -1;
+}
+
+.pledge-submit {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.pledge-submit-btn {
+  font-size: 18px;
+}
+
 .pipeline-empty {
   border: 1px dashed #cfdceb;
   border-radius: 10px;
@@ -759,6 +812,10 @@ body {
   }
 
   .member-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pledge-grid {
     grid-template-columns: 1fr;
   }
 }
