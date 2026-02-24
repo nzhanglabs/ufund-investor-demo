@@ -374,6 +374,7 @@ body {
 
 .module-card .chip-row {
   min-height: 36px;
+  justify-content: center;
 }
 
 .home-modules .chip-row {
