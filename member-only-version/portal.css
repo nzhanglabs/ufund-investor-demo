@@ -163,6 +163,35 @@ body {
   padding: 28px 22px 52px;
 }
 
+.page-breadcrumbs {
+  display: none;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 2px 0 14px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.page-breadcrumbs a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.page-breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.crumb-sep {
+  color: #9aa3af;
+  font-weight: 600;
+}
+
+.crumb-current {
+  color: var(--text);
+}
+
 .hero {
   background: linear-gradient(135deg, #FFFFFF 0%, #FAF8F3 72%);
   border: 1px solid var(--line);
@@ -598,6 +627,7 @@ body {
   padding: 12px 8px;
   font-size: 15px;
 }
+
 
 .table th {
   color: var(--muted);

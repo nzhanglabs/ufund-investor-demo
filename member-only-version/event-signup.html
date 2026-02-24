@@ -6,7 +6,7 @@
     <title>Event Sign-up</title>
     <link rel="stylesheet" href="portal.css" />
   </head>
-  <body data-page="home">
+  <body data-page="events">
     <header class="portal-header">
       <div class="header-inner">
         <div class="brand"><div class="brand-mark"></div></div>
@@ -21,14 +21,84 @@
         <div class="header-right"><a id="logoutBtn" class="btn secondary" href="#">Logout</a></div>
       </div>
     </header>
+
     <main class="page">
-      <section class="legacy-box">
-        <div class="kicker">Legacy URL</div>
-        <h1 style="margin:0 0 8px; font-family:Montserrat, sans-serif;">This page has moved</h1>
-        <p style="margin:0 0 14px; color:#5f7390;">Event Sign-up is now part of the redesigned member portal.</p>
-        <a class="btn" data-role-link href="events.html">Continue to updated page</a>
+      <section class="hero">
+        <div class="kicker">Events RSVP</div>
+        <h1>Zoom Meeting Sign Up</h1>
+        <p>Reserve your seat for upcoming member events. Demo form for workflow preview.</p>
       </section>
+
+      <section class="card">
+        <h3 style="margin:0 0 12px;">RSVP Form</h3>
+        <form id="zoomSignupForm" class="grid-2">
+          <label style="display:grid; gap:6px;">
+            <span style="font-weight:700;">Full Name</span>
+            <input id="fullName" type="text" required style="padding:10px; border:1px solid #d6e1ee; border-radius:8px;" />
+          </label>
+          <label style="display:grid; gap:6px;">
+            <span style="font-weight:700;">Email</span>
+            <input id="email" type="email" required style="padding:10px; border:1px solid #d6e1ee; border-radius:8px;" />
+          </label>
+          <label style="display:grid; gap:6px;">
+            <span style="font-weight:700;">Company</span>
+            <input id="company" type="text" style="padding:10px; border:1px solid #d6e1ee; border-radius:8px;" />
+          </label>
+          <label style="display:grid; gap:6px;">
+            <span style="font-weight:700;">Timezone</span>
+            <select id="timezone" required style="padding:10px; border:1px solid #d6e1ee; border-radius:8px;">
+              <option value="ET">Eastern (ET)</option>
+              <option value="CT">Central (CT)</option>
+              <option value="MT">Mountain (MT)</option>
+              <option value="PT">Pacific (PT)</option>
+            </select>
+          </label>
+          <label style="display:grid; gap:6px; grid-column:1 / -1;">
+            <span style="font-weight:700;">Event</span>
+            <select id="eventName" required style="padding:10px; border:1px solid #d6e1ee; border-radius:8px;">
+              <option value="Q1 Market Outlook">Q1 Market Outlook</option>
+              <option value="Deal Review Office Hours">Deal Review Office Hours</option>
+            </select>
+          </label>
+          <label style="display:grid; gap:6px; grid-column:1 / -1;">
+            <span style="font-weight:700;">Questions for the host (optional)</span>
+            <textarea id="questions" rows="4" style="padding:10px; border:1px solid #d6e1ee; border-radius:8px;"></textarea>
+          </label>
+          <div style="grid-column:1 / -1; display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn" type="submit">Submit</button>
+            <a class="btn secondary" data-role-link href="events.html">Back to Events</a>
+          </div>
+        </form>
+      </section>
+
+      <section id="signupSuccess" class="card" style="margin-top:14px; display:none;">
+        <h3 style="margin:0 0 10px;">RSVP Confirmed</h3>
+        <p id="signupSummary" style="margin:0 0 10px; color:#5f7390;"></p>
+        <p style="margin:0 0 10px;">Demo Zoom link:</p>
+        <a class="btn" href="https://zoom.us/j/1234567890" target="_blank" rel="noopener noreferrer">Open Zoom Link</a>
+      </section>
+
+      <div class="note">
+        <strong>Note</strong><br />
+        This is a demo sign-up flow. In production, the Zoom link and calendar invite are typically sent by email after RSVP confirmation.
+      </div>
     </main>
+
     <script src="portal.js"></script>
+    <script>
+      const form = document.getElementById("zoomSignupForm");
+      const success = document.getElementById("signupSuccess");
+      const summary = document.getElementById("signupSummary");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.getElementById("fullName").value.trim();
+        const eventName = document.getElementById("eventName").value;
+        const timezone = document.getElementById("timezone").value;
+        summary.textContent = `${name || "Member"}, your RSVP for ${eventName} (${timezone}) is received.`;
+        success.style.display = "block";
+        success.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    </script>
   </body>
 </html>

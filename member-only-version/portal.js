@@ -16,6 +16,30 @@
     if (a.dataset.page === page) a.classList.add("active");
   });
 
+  const main = document.querySelector("main.page");
+  if (main && !document.getElementById("breadcrumbs")) {
+    const nav = document.createElement("nav");
+    nav.id = "breadcrumbs";
+    nav.className = "page-breadcrumbs";
+    nav.setAttribute("aria-label", "Breadcrumb");
+    main.prepend(nav);
+  }
+
+  function renderBreadcrumbs() {
+    const target = document.getElementById("breadcrumbs");
+    if (!target || !window.UfundBreadcrumbs || typeof window.UfundBreadcrumbs.render !== "function") return;
+    window.UfundBreadcrumbs.render(target);
+  }
+
+  if (window.UfundBreadcrumbs) {
+    renderBreadcrumbs();
+  } else {
+    const script = document.createElement("script");
+    script.src = "assets/breadcrumbs.js";
+    script.onload = renderBreadcrumbs;
+    document.head.appendChild(script);
+  }
+
   const disclaimerHost = document.querySelector("main.page") || document.body;
   if (disclaimerHost && !document.querySelector(".page-disclaimer") && !document.getElementById("globalDisclosure")) {
     const disclaimer = document.createElement("section");
