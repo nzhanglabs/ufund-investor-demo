@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pledge Form</title>
+    <link rel="stylesheet" href="portal.css" />
+  </head>
+  <body data-page="deal-room">
+    <header class="portal-header"><div class="header-inner"><div class="brand"><div class="brand-mark"></div></div><nav class="top-nav"><a data-page="home" data-role-link href="member-vault.html">Home</a><a data-page="deal-room" data-role-link href="active-deals.html">Deal Room</a><a data-page="documents" data-role-link href="qualified-library.html">Documents</a><a data-page="events" data-role-link href="events.html">Events</a>
+          <a data-page="faq" data-role-link href="faq.html">FAQ</a>
+          <a data-page="contact" data-role-link href="contact.html">Contact</a></nav><div class="header-right"><a id="logoutBtn" class="btn secondary" href="#">Logout</a></div></div></header>
+    <main class="page">
+      <section class="hero"><div class="kicker">Pledge</div><h1>I want to Pledge</h1><p>Submit your indication of interest.</p></section>
+      <section class="card">
+        <form id="pledgeForm" class="grid-2">
+          <div><label>Subscriber First Name</label><input required name="first" style="width:100%; padding:9px; border:1px solid #d6e1ee; border-radius:8px;" /></div>
+          <div><label>Last Name</label><input required name="last" style="width:100%; padding:9px; border:1px solid #d6e1ee; border-radius:8px;" /></div>
+          <div><label>Email</label><input required type="email" name="email" style="width:100%; padding:9px; border:1px solid #d6e1ee; border-radius:8px;" /></div>
+          <div><label>Phone</label><input required name="phone" style="width:100%; padding:9px; border:1px solid #d6e1ee; border-radius:8px;" /></div>
+          <div><label>Project Name</label><input required name="project" style="width:100%; padding:9px; border:1px solid #d6e1ee; border-radius:8px;" /></div>
+          <div><label>Pledge Amount</label><input required name="amount" style="width:100%; padding:9px; border:1px solid #d6e1ee; border-radius:8px;" /></div>
+          <div style="grid-column:1/-1;"><label>Note</label><textarea name="note" style="width:100%; min-height:90px; padding:9px; border:1px solid #d6e1ee; border-radius:8px;"></textarea></div>
+          <div style="grid-column:1/-1; text-align:center; margin-top:6px;"><button class="btn" style="font-size:18px; padding:12px 28px;">Submit</button></div>
+        </form>
+      </section>
+    </main>
+    <script src="portal.js"></script>
+    <script>
+      document.getElementById('pledgeForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const deal = new URLSearchParams(window.location.search).get('deal') || 'harbor';
+        window.location.href = `deal-pledge-confirmation.html?deal=${encodeURIComponent(deal)}&role=member`;
+      });
+    </script>
+  </body>
+</html>

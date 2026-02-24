@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Portal</title>
+    <link rel="stylesheet" href="portal.css" />
+  </head>
+  <body data-page="home">
+    <header class="portal-header">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-mark"></div>
+        </div>
+        <nav class="top-nav">
+          <a data-page="home" data-role-link href="member-vault.html">Home</a>
+          <a data-page="deal-room" data-role-link href="active-deals.html">Deal Room</a>
+          <a data-page="documents" data-role-link href="qualified-library.html">Documents</a>
+          <a data-page="events" data-role-link href="events.html">Events</a>
+          <a data-page="faq" data-role-link href="faq.html">FAQ</a>
+          <a data-page="contact" data-role-link href="contact.html">Contact</a>
+        </nav>
+        <div class="header-right">
+          <a id="logoutBtn" class="btn secondary" href="#">Logout</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero hero-center">
+        <div class="kicker">Welcome Back</div>
+        <h1>Club Member Dashboard</h1>
+        <p>Your private command center for deal review, member documents, and curated event intelligence.</p>
+      </section>
+
+      <section class="grid-3 home-modules">
+        <article class="card feature-card module-card">
+          <div class="module-main">
+            <h3>Deal Room</h3>
+            <p>Review latest offering materials and monitor directional pipeline updates.</p>
+          </div>
+          <div class="chip-row">
+            <span class="chip">Latest Offering</span>
+            <span class="chip">Pipeline</span>
+            <span class="chip">Pledge Flow</span>
+          </div>
+          <div class="module-action"><a class="btn" data-role-link href="active-deals.html">Enter</a></div>
+        </article>
+
+        <article class="card feature-card module-card">
+          <div class="module-main">
+            <h3>Documents</h3>
+            <p>Access reports, FAQs, market insights, and educational resources.</p>
+          </div>
+          <div class="chip-row docs-tabs">
+            <span class="chip">Reports</span>
+            <span class="chip">Market Insights</span>
+            <span class="chip">Newsletter</span>
+            <span class="chip">FAQ</span>
+          </div>
+          <div class="module-action"><a class="btn" data-role-link href="qualified-library.html">Enter</a></div>
+        </article>
+
+        <article class="card feature-card module-card">
+          <div class="module-main">
+            <h3>Events</h3>
+            <p>Manage upcoming events, notifications, and replay access in one place.</p>
+          </div>
+          <div class="chip-row">
+            <span class="chip">RSVP</span>
+            <span class="chip">Replay</span>
+            <span class="chip">Notifications</span>
+          </div>
+          <div class="module-action"><a class="btn" data-role-link href="events.html">Enter</a></div>
+        </article>
+      </section>
+
+      <section class="page-disclaimer">
+        <p><strong>Disclaimer:</strong> UFUND Investment LLC and its affiliates do not endorse or guarantee the performance of any specific investment opportunity. Investments offered through our platform are speculative in nature and involve substantial risk. You should not invest unless you can bear the risk of loss of capital, including the potential for total loss. Diversification does not ensure a profit or protect against loss.</p>
+        <p>All investors should carefully consider their individual financial situation and consult with a professional advisor before making any investment decision. Private placements are illiquid investments and are intended for investors who do not require a liquid investment.</p>
+        <p>Performance information provided through our platform has not been audited or independently verified. Any open investments are available exclusively to accredited investors.</p>
+      </section>
+
+    </main>
+
+    <script src="portal.js"></script>
+  </body>
+</html>

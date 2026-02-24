@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deal Room</title>
+    <link rel="stylesheet" href="portal.css" />
+  </head>
+  <body data-page="deal-room">
+    <header class="portal-header">
+      <div class="header-inner">
+        <div class="brand"><div class="brand-mark"></div></div>
+        <nav class="top-nav">
+          <a data-page="home" data-role-link href="member-vault.html">Home</a>
+          <a data-page="deal-room" data-role-link href="active-deals.html">Deal Room</a>
+          <a data-page="documents" data-role-link href="qualified-library.html">Documents</a>
+          <a data-page="events" data-role-link href="events.html">Events</a>
+          <a data-page="faq" data-role-link href="faq.html">FAQ</a>
+          <a data-page="contact" data-role-link href="contact.html">Contact</a>
+        </nav>
+        <div class="header-right"><a id="logoutBtn" class="btn secondary" href="#">Logout</a></div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="section-break offering-section">
+        <div class="section-kicker">Offerings</div>
+        <h2>Latest Offerings</h2>
+      </section>
+
+      <section class="grid-2">
+        <article class="card feature-card">
+          <div class="kicker status-tab status-tab-alive">Alive</div>
+          <h3>Harbor Logistics I</h3>
+          <ul class="meta-list">
+            <li>Location: Savannah Metro, GA</li>
+            <li>Asset Type: Industrial</li>
+            <li>Update: Package refreshed this month</li>
+          </ul>
+          <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+            <a class="btn" data-role-link href="deal-harbor.html">View Full Package</a>
+            <a class="btn" data-role-link href="deal-pledge-form.html?deal=harbor">I want to Pledge</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="kicker status-tab status-tab-closed">Closed</div>
+          <h3>Sunbelt Multifamily Select</h3>
+          <ul class="meta-list">
+            <li>Location: Dallas-Fort Worth, TX</li>
+            <li>Asset Type: Multifamily</li>
+            <li>Status: Closed to new pledges</li>
+          </ul>
+          <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+            <a class="btn" data-role-link href="deal-sunbelt.html">View Full Package</a>
+            <a class="btn disabled" href="javascript:void(0)" aria-disabled="true">I want to Pledge</a>
+          </div>
+        </article>
+      </section>
+
+      <section class="exploratory-box" aria-label="Exploratory opportunities">
+        <div class="exploratory-head">
+          <h2>Exploratory Opportunities</h2>
+          <span class="info-badge">Info only</span>
+        </div>
+        <div class="grid-2 exploratory-grid">
+          <article class="card">
+            <h4>Sunbelt Multifamily - Atlanta</h4>
+            <p>Industry: Multifamily</p>
+            <p class="module-points">Stage: Underwriting. Value-add multifamily profile in high-growth suburban corridors.</p>
+          </article>
+          <article class="card">
+            <h4>Workforce Housing - Houston</h4>
+            <p>Industry: Multifamily</p>
+            <p class="module-points">Stage: Initial DD. Workforce housing theme near employment hubs with income-stability focus.</p>
+          </article>
+          <article class="card">
+            <h4>Last-Mile Industrial - DFW</h4>
+            <p>Industry: Industrial</p>
+            <p class="module-points">Stage: IC Review. Logistics-oriented profile tied to major transportation corridors.</p>
+          </article>
+          <article class="card">
+            <h4>Essential Retail - Tampa</h4>
+            <p>Industry: Commercial</p>
+            <p class="module-points">Stage: Underwriting. Necessity-based retail profile in dense residential submarkets.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="note">
+        <strong>Important Notice</strong><br />
+        Materials shown in this Deal Room are for information and workflow demonstration only. Any offering, if made, will be made solely through applicable offering documents.
+      </div>
+    </main>
+
+    <script src="portal.js"></script>
+  </body>
+</html>

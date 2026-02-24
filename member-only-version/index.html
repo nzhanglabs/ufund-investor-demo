@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Member Portal</title>
+    <link rel="stylesheet" href="portal.css" />
+  </head>
+  <body data-page="home">
+    <header class="portal-header">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-mark"></div>
+        </div>
+        <nav class="top-nav">
+          <a data-page="home" data-role-link href="member-vault.html">Home</a>
+          <a data-page="deal-room" data-role-link href="active-deals.html">Deal Room</a>
+          <a data-page="documents" data-role-link href="qualified-library.html">Documents</a>
+          <a data-page="events" data-role-link href="events.html">Events</a>
+          <a data-page="faq" data-role-link href="faq.html">FAQ</a>
+          <a data-page="contact" data-role-link href="contact.html">Contact</a>
+        </nav>
+        <div class="header-right">
+          <a id="logoutBtn" class="btn secondary" href="#">Logout</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <div class="kicker">Welcome Back</div>
+        <h1>Club Member Dashboard</h1>
+        <p>Centralized access to deal review, member documents, and event updates.</p>
+      </section>
+
+      <section class="grid-3">
+        <article class="card">
+          <h3>Deal Room</h3>
+          <p>Review the latest offering and high-level Upcoming Opportunities updates.</p>
+          <ul class="meta-list">
+            <li>Latest Offering with primary CTA</li>
+            <li>Pipeline overview (informational)</li>
+            <li>No offer/solicitation language</li>
+          </ul>
+          <div style="margin-top:12px;"><a class="btn" data-role-link href="active-deals.html">Enter Deal Room</a></div>
+        </article>
+
+        <article class="card">
+          <h3>Documents</h3>
+          <p>All core member resources in one consolidated page.</p>
+          <ul class="meta-list">
+            <li>Member Reports and FAQ</li>
+            <li>Market Insight, Track Record, Video Hub</li>
+            <li>Newsroom + newsletter/marketing links</li>
+          </ul>
+          <div style="margin-top:12px;"><a class="btn" data-role-link href="qualified-library.html">Open Documents</a></div>
+        </article>
+
+        <article class="card">
+          <h3>Events</h3>
+          <p>Upcoming events and member notifications in one place.</p>
+          <ul class="meta-list">
+            <li>Upcoming calendar</li>
+            <li>Live notifications feed</li>
+            <li>Direct sign-up actions</li>
+          </ul>
+          <div style="margin-top:12px;"><a class="btn" data-role-link href="events.html">View Events</a></div>
+        </article>
+      </section>
+
+      <section>
+        <h2 class="section-title">What’s New</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h4>Latest Offering Updated</h4>
+            <p>Deal Room has a refreshed package status and updated review notes.</p>
+            <a class="btn secondary" data-role-link href="active-deals.html">Review Update</a>
+          </article>
+          <article class="card">
+            <h4>Monthly Member Report Published</h4>
+            <p>New monthly report is available in Documents under Member Reports.</p>
+            <a class="btn secondary" data-role-link href="qualified-library.html#member-reports">Open Report</a>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="portal.js"></script>
+  </body>
+</html>

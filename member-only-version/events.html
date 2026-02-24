@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events</title>
+    <link rel="stylesheet" href="portal.css" />
+  </head>
+  <body data-page="events">
+    <header class="portal-header">
+      <div class="header-inner">
+        <div class="brand"><div class="brand-mark"></div></div>
+        <nav class="top-nav">
+          <a data-page="home" data-role-link href="member-vault.html">Home</a>
+          <a data-page="deal-room" data-role-link href="active-deals.html">Deal Room</a>
+          <a data-page="documents" data-role-link href="qualified-library.html">Documents</a>
+          <a data-page="events" data-role-link href="events.html">Events</a>
+          <a data-page="faq" data-role-link href="faq.html">FAQ</a>
+          <a data-page="contact" data-role-link href="contact.html">Contact</a>
+        </nav>
+        <div class="header-right"><a id="logoutBtn" class="btn secondary" href="#">Logout</a></div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <div class="kicker">Events & Notifications</div>
+        <h1>Upcoming Events</h1>
+        <p>Single place for RSVP actions, reminder cadence, and replay notices.</p>
+      </section>
+
+      <section class="card feature-card">
+        <h3>Upcoming Events</h3>
+        <table class="table">
+          <thead>
+            <tr><th>Date</th><th>Event</th><th>Format</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mar 14, 2026</td><td>Q1 Market Outlook</td><td>Live Webinar</td><td><a class="btn" data-role-link href="event-signup.html">Sign Up</a></td></tr>
+            <tr><td>Mar 28, 2026</td><td>Deal Review Office Hours</td><td>Live Q&A</td><td><a class="btn" data-role-link href="event-signup.html">Sign Up</a></td></tr>
+            <tr><td>Feb 08, 2026</td><td>Member Update Replay</td><td>Replay</td><td><a class="btn secondary" data-role-link href="youtube.html">Watch Replay</a></td></tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+
+    <script src="portal.js"></script>
+  </body>
+</html>

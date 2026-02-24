@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Logout</title><link rel="stylesheet" href="portal.css" /></head>
+  <body data-page="home">
+    <main class="page">
+      <section class="legacy-box">
+        <h1 style="margin:0 0 8px; font-family:Montserrat, sans-serif;">Signing out...</h1>
+        <p style="color:#5f7390;">Please wait.</p>
+      </section>
+    </main>
+    <script>
+      localStorage.removeItem('ufund_auth_session');
+      window.location.href = 'member-vault.html?role=member';
+    </script>
+  </body>
+</html>

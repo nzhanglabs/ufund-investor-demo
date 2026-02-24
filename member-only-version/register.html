@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UFUND Invite Registration</title>
+    <style>
+      body { margin: 0; font-family: "Source Sans 3", "Segoe UI", sans-serif; background: linear-gradient(180deg, #f7f9fc, #eef2f7); color: #1a2f49; }
+      .wrap { max-width: 560px; margin: 48px auto; background: #fff; border: 1px solid #d9e3ef; border-radius: 12px; box-shadow: 0 12px 26px rgba(15, 39, 68, 0.08); padding: 20px; }
+      h1 { margin: 0 0 6px; font-size: 28px; font-family: "Montserrat", sans-serif; }
+      .sub { margin: 0 0 16px; color: #5f7390; }
+      .field { display: grid; gap: 6px; margin-bottom: 10px; }
+      label { font-size: 14px; font-weight: 700; color: #1a3555; }
+      input { border: 1px solid #d6e1ee; border-radius: 8px; padding: 10px; font: inherit; }
+      .btn { border: 0; border-radius: 8px; background: #f59a23; color: #fff; font-weight: 700; padding: 10px 14px; cursor: pointer; }
+      .error { color: #b5391f; font-size: 13px; min-height: 18px; margin-top: 8px; }
+      .info { margin: 10px 0; padding: 10px; border: 1px solid #d7e3f1; border-radius: 8px; background: #f7fbff; color: #506784; }
+      .lock { border: 1px solid #f0c8bf; background: #fff7f5; color: #b74220; border-radius: 10px; padding: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Create Investor Login</h1>
+      <p class="sub">Registration is invite-only. A valid UFUND link is required.</p>
+
+      <div id="locked" class="lock" style="display:none;"></div>
+      <div id="inviteInfo" class="info" style="display:none;"></div>
+
+      <form id="registerForm" style="display:none;">
+        <div class="field">
+          <label>First Name</label>
+          <input id="firstName" type="text" required />
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          <input id="lastName" type="text" required />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input id="email" type="email" readonly required />
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input id="password" type="password" required />
+        </div>
+        <div class="field">
+          <label>Confirm Password</label>
+          <input id="confirmPassword" type="password" required />
+        </div>
+        <button class="btn" type="submit">Create Login</button>
+      </form>
+
+      <div id="error" class="error"></div>
+    </div>
+
+    <script>
+      const AUTH_KEYS = {
+        users: "ufund_auth_users",
+        invites: "ufund_auth_invites",
+        session: "ufund_auth_session"
+      };
+
+      const DEFAULT_INVITES = [
+        { token: "UFUND-MEMBER-DEMO", email: "member.demo@ufundinvestment.com", initialRole: "member", used: false, reusable: true }
+      ];
+
+      const readJSON = (k, f) => { try { const raw = localStorage.getItem(k); return raw ? JSON.parse(raw) : f; } catch { return f; } };
+      const writeJSON = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+      const invites = readJSON(AUTH_KEYS.invites, []);
+      if (!invites.length) writeJSON(AUTH_KEYS.invites, DEFAULT_INVITES);
+
+      const token = new URLSearchParams(window.location.search).get("token");
+      const inviteList = readJSON(AUTH_KEYS.invites, []);
+      const invite = inviteList.find((i) => i.token === token);
+      const isDemoToken = !!(invite && typeof invite.token === "string" && invite.token.endsWith("-DEMO"));
+      const isInviteReusable = !!(invite && (invite.reusable || isDemoToken));
+      const inviteConsumed = !!(invite && invite.used && !isInviteReusable);
+
+      const lockedEl = document.getElementById("locked");
+      const inviteInfoEl = document.getElementById("inviteInfo");
+      const form = document.getElementById("registerForm");
+      const errorEl = document.getElementById("error");
+
+      if (!token || !invite || inviteConsumed) {
+        lockedEl.style.display = "block";
+        lockedEl.textContent = "Invalid or expired invite link. Please contact investor@ufundinvestment.com for a new invite.";
+      } else {
+        form.style.display = "block";
+        inviteInfoEl.style.display = "block";
+        inviteInfoEl.textContent = `Invite verified for ${invite.email} | Access on first login: Club Member`;
+        document.getElementById("email").value = invite.email;
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        errorEl.textContent = "";
+
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+          errorEl.textContent = "Passwords do not match.";
+          return;
+        }
+
+        const users = readJSON(AUTH_KEYS.users, []);
+        if (users.some((u) => (u.email || "").toLowerCase() === email)) {
+          errorEl.textContent = "This email is already registered. Please login instead.";
+          return;
+        }
+
+        users.push({
+          email,
+          password,
+          firstName,
+          lastName,
+          role: "member",
+          createdAt: new Date().toISOString()
+        });
+        writeJSON(AUTH_KEYS.users, users);
+
+        const nextInvites = readJSON(AUTH_KEYS.invites, []).map((i) => {
+          if (i.token !== invite.token) return i;
+          const reusable = !!(i.reusable || (typeof i.token === "string" && i.token.endsWith("-DEMO")));
+          if (reusable) return i;
+          return { ...i, used: true, usedAt: new Date().toISOString() };
+        });
+        writeJSON(AUTH_KEYS.invites, nextInvites);
+
+        writeJSON(AUTH_KEYS.session, { email, role: "member" });
+        window.location.href = "member-vault.html?role=member";
+      });
+    </script>
+  </body>
+</html>

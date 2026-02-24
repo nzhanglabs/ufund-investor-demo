@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UFUND Admin Console (Demo)</title>
+    <style>
+      body { margin: 0; font-family: "Source Sans 3", "Segoe UI", sans-serif; background: #f3f6fb; color: #17304d; }
+      .wrap { max-width: 900px; margin: 26px auto; background: #fff; border: 1px solid #d9e3ef; border-radius: 12px; box-shadow: 0 12px 26px rgba(15, 39, 68, 0.08); padding: 18px; }
+      h1 { margin: 0 0 8px; font-size: 30px; font-family: "Montserrat", sans-serif; }
+      .sub { margin: 0 0 14px; color: #5f7390; }
+      .card { border: 1px solid #e3ebf5; border-radius: 10px; padding: 12px; margin-bottom: 12px; background: #f9fcff; }
+      .row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; }
+      .field { display: grid; gap: 6px; margin-bottom: 8px; }
+      label { font-size: 13px; font-weight: 700; }
+      input, select { border: 1px solid #d6e1ee; border-radius: 8px; padding: 9px; font: inherit; }
+      .btn { border: 0; border-radius: 8px; background: #f59a23; color: #fff; font-weight: 700; padding: 9px 12px; cursor: pointer; }
+      .btn.secondary { background: #eef3f9; color: #244266; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { border-bottom: 1px solid #e1e9f3; padding: 8px; text-align: left; font-size: 14px; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; word-break: break-all; }
+      .error { color: #b5391f; font-size: 13px; min-height: 18px; }
+      .ok { color: #2f6b45; font-size: 13px; min-height: 18px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Admin Console (Demo)</h1>
+      <p class="sub">Member-only demo admin panel. Create invite links and review registered users.</p>
+
+      <div id="panel">
+        <div class="card">
+          <h3 style="margin-top:0;">Create Invite Link</h3>
+          <div class="row" style="grid-template-columns: 1fr auto;">
+            <input id="inviteEmail" type="email" placeholder="Investor email" />
+            <button id="createInviteBtn" class="btn" type="button">Create Link</button>
+          </div>
+          <div id="inviteResult" class="mono" style="margin-top:8px;"></div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0;">Registered Users</h3>
+          <table>
+            <thead>
+              <tr><th>Email</th><th>Name</th><th>Role</th><th>Created</th></tr>
+            </thead>
+            <tbody id="userRows"></tbody>
+          </table>
+          <div id="saveMsg" class="ok"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const AUTH_KEYS = {
+        users: "ufund_auth_users",
+        invites: "ufund_auth_invites",
+        session: "ufund_auth_session"
+      };
+
+      const DEFAULT_INVITES = [
+        { token: "UFUND-MEMBER-DEMO", email: "member.demo@ufundinvestment.com", initialRole: "member", used: false, reusable: true }
+      ];
+
+      const readJSON = (k, f) => { try { const raw = localStorage.getItem(k); return raw ? JSON.parse(raw) : f; } catch { return f; } };
+      const writeJSON = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+      const invites = readJSON(AUTH_KEYS.invites, []);
+      if (!invites.length) writeJSON(AUTH_KEYS.invites, DEFAULT_INVITES);
+
+      function renderUsers() {
+        const users = readJSON(AUTH_KEYS.users, []);
+        const tbody = document.getElementById("userRows");
+        tbody.innerHTML = users.map((u) => `
+          <tr>
+            <td>${u.email || ""}</td>
+            <td>${(u.firstName || "") + " " + (u.lastName || "")}</td>
+            <td>Club Member</td>
+            <td>${u.createdAt ? new Date(u.createdAt).toLocaleString() : "-"}</td>
+          </tr>
+        `).join("");
+      }
+      renderUsers();
+
+      document.getElementById("createInviteBtn").addEventListener("click", () => {
+        const email = document.getElementById("inviteEmail").value.trim().toLowerCase();
+        if (!email) return;
+
+        const initialRole = "member";
+        const token = `UFUND-MEMBER-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+        const invitesNow = readJSON(AUTH_KEYS.invites, []);
+        invitesNow.push({ token, email, initialRole, used: false, createdAt: new Date().toISOString() });
+        writeJSON(AUTH_KEYS.invites, invitesNow);
+
+        const basePath = window.location.pathname.replace(/\/[^/]*$/, "/");
+        const link = `${window.location.origin}${basePath}register.html?token=${encodeURIComponent(token)}`;
+        document.getElementById("inviteResult").textContent = link;
+      });
+    </script>
+  </body>
+</html>
